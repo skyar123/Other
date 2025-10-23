@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition Quest: 2025 America</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="title-screen" class="screen active">
+            <h1>Transition Quest</h1>
+            <h2>2025 America</h2>
+            <p class="subtitle">An Open World RPG of Identity, Courage, and Change</p>
+            <button id="start-button" class="btn-primary">Begin Your Journey</button>
+            <div class="intro-text">
+                <p>In 2025 America, the fight for trans rights reaches a critical moment.</p>
+                <p>Create your character, explore the land, meet legendary allies,</p>
+                <p>and stand against those who would deny your existence.</p>
+            </div>
+        </div>
+
+        <div id="character-creation" class="screen">
+            <h2>Create Your Character</h2>
+            <div class="creation-panel">
+                <div class="form-group">
+                    <label for="char-name">Name:</label>
+                    <input type="text" id="char-name" placeholder="Enter your name" maxlength="20">
+                </div>
+
+                <div class="form-group">
+                    <label for="char-identity">Gender Identity:</label>
+                    <select id="char-identity">
+                        <option value="trans-woman">Trans Woman</option>
+                        <option value="trans-man">Trans Man</option>
+                        <option value="non-binary">Non-Binary</option>
+                        <option value="genderfluid">Genderfluid</option>
+                        <option value="agender">Agender</option>
+                        <option value="questioning">Questioning</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Starting Skills (Distribute 10 points):</label>
+                    <div class="skill-distribution">
+                        <div class="skill-item">
+                            <span>Advocacy:</span>
+                            <button class="skill-minus" data-skill="advocacy">-</button>
+                            <span id="skill-advocacy" class="skill-value">2</span>
+                            <button class="skill-plus" data-skill="advocacy">+</button>
+                        </div>
+                        <div class="skill-item">
+                            <span>Resilience:</span>
+                            <button class="skill-minus" data-skill="resilience">-</button>
+                            <span id="skill-resilience" class="skill-value">2</span>
+                            <button class="skill-plus" data-skill="resilience">+</button>
+                        </div>
+                        <div class="skill-item">
+                            <span>Knowledge:</span>
+                            <button class="skill-minus" data-skill="knowledge">-</button>
+                            <span id="skill-knowledge" class="skill-value">2</span>
+                            <button class="skill-plus" data-skill="knowledge">+</button>
+                        </div>
+                        <div class="skill-item">
+                            <span>Empathy:</span>
+                            <button class="skill-minus" data-skill="empathy">-</button>
+                            <span id="skill-empathy" class="skill-value">2</span>
+                            <button class="skill-plus" data-skill="empathy">+</button>
+                        </div>
+                        <div class="skill-item">
+                            <span>Courage:</span>
+                            <button class="skill-minus" data-skill="courage">-</button>
+                            <span id="skill-courage" class="skill-value">2</span>
+                            <button class="skill-plus" data-skill="courage">+</button>
+                        </div>
+                    </div>
+                    <p class="points-remaining">Points Remaining: <span id="points-remaining">0</span></p>
+                </div>
+
+                <button id="create-character-button" class="btn-primary">Start Adventure</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div id="game-ui">
+                <div id="top-bar">
+                    <div id="character-info">
+                        <span id="char-name-display"></span> |
+                        <span id="char-level">Level 1</span> |
+                        <span id="char-identity-display"></span>
+                    </div>
+                    <div id="resources">
+                        <span>Health: <span id="health-display">100/100</span></span>
+                        <span>Energy: <span id="energy-display">100/100</span></span>
+                        <span>Hope: <span id="hope-display">50/100</span></span>
+                    </div>
+                </div>
+
+                <div id="game-main">
+                    <div id="canvas-container">
+                        <canvas id="game-canvas" width="800" height="600"></canvas>
+                        <div id="location-display"></div>
+                    </div>
+
+                    <div id="side-panel">
+                        <div class="panel-section">
+                            <h3>Quest Log</h3>
+                            <div id="quest-list"></div>
+                        </div>
+
+                        <div class="panel-section">
+                            <h3>Skills</h3>
+                            <div id="skills-display"></div>
+                        </div>
+
+                        <div class="panel-section">
+                            <h3>Inventory</h3>
+                            <div id="inventory-display"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bottom-bar">
+                    <div id="message-log"></div>
+                    <div id="controls-hint">
+                        Arrow Keys: Move | Space: Interact | I: Inventory | Q: Quests | ESC: Menu
+                    </div>
+                </div>
+            </div>
+
+            <div id="dialogue-modal" class="modal">
+                <div class="modal-content">
+                    <h3 id="dialogue-speaker"></h3>
+                    <p id="dialogue-text"></p>
+                    <div id="dialogue-options"></div>
+                </div>
+            </div>
+
+            <div id="combat-modal" class="modal">
+                <div class="modal-content">
+                    <h3>Battle!</h3>
+                    <div id="combat-area">
+                        <div class="combatant" id="player-combat">
+                            <h4 id="player-combat-name"></h4>
+                            <div class="health-bar">
+                                <div id="player-health-bar" class="health-fill"></div>
+                            </div>
+                            <p id="player-combat-health"></p>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="combatant" id="enemy-combat">
+                            <h4 id="enemy-combat-name"></h4>
+                            <div class="health-bar">
+                                <div id="enemy-health-bar" class="health-fill"></div>
+                            </div>
+                            <p id="enemy-combat-health"></p>
+                        </div>
+                    </div>
+                    <div id="combat-log"></div>
+                    <div id="combat-actions">
+                        <button class="combat-btn" id="attack-btn">Debate Attack</button>
+                        <button class="combat-btn" id="special-btn">Special Ability</button>
+                        <button class="combat-btn" id="defend-btn">Defend</button>
+                        <button class="combat-btn" id="flee-btn">Retreat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

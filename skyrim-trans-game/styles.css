@@ -1,0 +1,523 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    overflow: hidden;
+}
+
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.screen.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Title Screen */
+#title-screen {
+    text-align: center;
+}
+
+#title-screen h1 {
+    font-size: 4em;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+    background: linear-gradient(45deg, #ff6ec4, #7873f5, #4facfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+#title-screen h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ffd700;
+}
+
+.subtitle {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #e0e0e0;
+}
+
+.intro-text {
+    margin-top: 40px;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.intro-text p {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+.btn-primary {
+    padding: 15px 40px;
+    font-size: 1.3em;
+    background: linear-gradient(45deg, #ff6ec4, #7873f5);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Character Creation */
+#character-creation {
+    justify-content: flex-start;
+    padding-top: 50px;
+}
+
+#character-creation h2 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.creation-panel {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    min-width: 500px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.form-group input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.skill-distribution {
+    margin-top: 15px;
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+}
+
+.skill-item span:first-child {
+    flex: 1;
+    font-weight: bold;
+}
+
+.skill-minus,
+.skill-plus {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.skill-minus:hover,
+.skill-plus:hover {
+    background: rgba(255,255,255,0.5);
+}
+
+.skill-value {
+    min-width: 30px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.points-remaining {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Game Screen */
+#game-screen {
+    display: none;
+    padding: 0;
+}
+
+#game-screen.active {
+    display: block;
+}
+
+#game-ui {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #1a1a2e;
+}
+
+#top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(0,0,0,0.5);
+    border-bottom: 2px solid #667eea;
+}
+
+#character-info {
+    font-size: 1.1em;
+}
+
+#resources {
+    display: flex;
+    gap: 20px;
+}
+
+#resources span {
+    padding: 5px 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+}
+
+#game-main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+#canvas-container {
+    flex: 1;
+    position: relative;
+    background: #0f0f1e;
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+}
+
+#location-display {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 10px;
+    font-size: 1.2em;
+    border: 2px solid #667eea;
+}
+
+#side-panel {
+    width: 300px;
+    background: rgba(0,0,0,0.3);
+    border-left: 2px solid #667eea;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.panel-section {
+    margin-bottom: 30px;
+}
+
+.panel-section h3 {
+    color: #7873f5;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 8px;
+}
+
+#quest-list,
+#skills-display,
+#inventory-display {
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+.quest-item,
+.skill-display-item,
+.inventory-item {
+    padding: 8px;
+    margin-bottom: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    border-left: 3px solid #ff6ec4;
+}
+
+.quest-active {
+    border-left-color: #ffd700;
+}
+
+.quest-completed {
+    border-left-color: #4caf50;
+    opacity: 0.6;
+}
+
+#bottom-bar {
+    background: rgba(0,0,0,0.5);
+    border-top: 2px solid #667eea;
+    padding: 15px 20px;
+}
+
+#message-log {
+    min-height: 60px;
+    max-height: 100px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 6px;
+    font-size: 0.9em;
+}
+
+.message {
+    margin-bottom: 5px;
+    padding: 3px 0;
+}
+
+.message-info {
+    color: #4facfe;
+}
+
+.message-success {
+    color: #4caf50;
+}
+
+.message-warning {
+    color: #ffd700;
+}
+
+.message-danger {
+    color: #ff6ec4;
+}
+
+#controls-hint {
+    text-align: center;
+    font-size: 0.85em;
+    color: #aaa;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+}
+
+.modal-content h3 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#dialogue-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+#dialogue-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dialogue-option {
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.dialogue-option:hover {
+    background: rgba(255,255,255,0.3);
+    border-color: #ff6ec4;
+    transform: translateX(5px);
+}
+
+/* Combat */
+#combat-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+.combatant {
+    text-align: center;
+    flex: 1;
+}
+
+.combatant h4 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.health-bar {
+    width: 100%;
+    height: 25px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50, #8bc34a);
+    transition: width 0.3s;
+}
+
+.vs {
+    font-size: 2em;
+    font-weight: bold;
+    padding: 0 20px;
+    color: #ffd700;
+}
+
+#combat-log {
+    min-height: 100px;
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    font-size: 0.95em;
+}
+
+.combat-message {
+    margin-bottom: 8px;
+    padding: 5px;
+}
+
+#combat-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.combat-btn {
+    padding: 15px;
+    font-size: 1.1em;
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.combat-btn:hover:not(:disabled) {
+    background: rgba(255,255,255,0.3);
+    border-color: #ff6ec4;
+    transform: scale(1.05);
+}
+
+.combat-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.5);
+}
