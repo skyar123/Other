@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Fallout 2: Wasteland Mobile</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="screen active">
+            <div class="vault-boy-logo">
+                <div class="vault-boy">👍</div>
+            </div>
+            <h1 class="game-title">FALLOUT 2</h1>
+            <h2 class="game-subtitle">WASTELAND MOBILE</h2>
+            <button id="start-btn" class="pip-boy-btn">START NEW GAME</button>
+            <button id="continue-btn" class="pip-boy-btn" style="display:none;">CONTINUE</button>
+        </div>
+
+        <!-- Character Creation Screen -->
+        <div id="character-screen" class="screen">
+            <div class="pip-boy-frame">
+                <h2 class="screen-title">CHARACTER CREATION</h2>
+
+                <div class="character-form">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="char-name" maxlength="20" placeholder="Vault Dweller">
+                    </div>
+
+                    <h3 class="section-title">S.P.E.C.I.A.L.</h3>
+                    <p class="points-remaining">Points Remaining: <span id="points-left">5</span></p>
+
+                    <div class="special-stats">
+                        <div class="stat-row" data-stat="strength">
+                            <span class="stat-label">Strength</span>
+                            <button class="stat-btn decrease">-</button>
+                            <span class="stat-value">5</span>
+                            <button class="stat-btn increase">+</button>
+                            <span class="stat-desc">Raw physical power</span>
+                        </div>
+                        <div class="stat-row" data-stat="perception">
+                            <span class="stat-label">Perception</span>
+                            <button class="stat-btn decrease">-</button>
+                            <span class="stat-value">5</span>
+                            <button class="stat-btn increase">+</button>
+                            <span class="stat-desc">Sensory awareness</span>
+                        </div>
+                        <div class="stat-row" data-stat="endurance">
+                            <span class="stat-label">Endurance</span>
+                            <button class="stat-btn decrease">-</button>
+                            <span class="stat-value">5</span>
+                            <button class="stat-btn increase">+</button>
+                            <span class="stat-desc">Stamina and health</span>
+                        </div>
+                        <div class="stat-row" data-stat="charisma">
+                            <span class="stat-label">Charisma</span>
+                            <button class="stat-btn decrease">-</button>
+                            <span class="stat-value">5</span>
+                            <button class="stat-btn increase">+</button>
+                            <span class="stat-desc">Social influence</span>
+                        </div>
+                        <div class="stat-row" data-stat="intelligence">
+                            <span class="stat-label">Intelligence</span>
+                            <button class="stat-btn decrease">-</button>
+                            <span class="stat-value">5</span>
+                            <button class="stat-btn increase">+</button>
+                            <span class="stat-desc">Mental acuity</span>
+                        </div>
+                        <div class="stat-row" data-stat="agility">
+                            <span class="stat-label">Agility</span>
+                            <button class="stat-btn decrease">-</button>
+                            <span class="stat-value">5</span>
+                            <button class="stat-btn increase">+</button>
+                            <span class="stat-desc">Speed and reflexes</span>
+                        </div>
+                        <div class="stat-row" data-stat="luck">
+                            <span class="stat-label">Luck</span>
+                            <button class="stat-btn decrease">-</button>
+                            <span class="stat-value">5</span>
+                            <button class="stat-btn increase">+</button>
+                            <span class="stat-desc">Fortune and chance</span>
+                        </div>
+                    </div>
+
+                    <button id="create-char-btn" class="pip-boy-btn">ENTER THE WASTELAND</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Game Screen -->
+        <div id="game-screen" class="screen">
+            <!-- Top HUD -->
+            <div class="hud-top">
+                <div class="player-stats">
+                    <div class="stat-bar">
+                        <span class="stat-label">HP:</span>
+                        <div class="bar-container">
+                            <div id="hp-bar" class="bar hp-bar" style="width: 100%"></div>
+                        </div>
+                        <span id="hp-text" class="stat-text">100/100</span>
+                    </div>
+                    <div class="stat-bar">
+                        <span class="stat-label">AP:</span>
+                        <div class="bar-container">
+                            <div id="ap-bar" class="bar ap-bar" style="width: 100%"></div>
+                        </div>
+                        <span id="ap-text" class="stat-text">10/10</span>
+                    </div>
+                </div>
+                <div class="player-info">
+                    <div id="player-name">Vault Dweller</div>
+                    <div id="player-level">Level 1</div>
+                    <div id="player-location">Arroyo Village</div>
+                </div>
+            </div>
+
+            <!-- Game View -->
+            <div class="game-view">
+                <div id="exploration-view" class="view active">
+                    <div class="location-display">
+                        <h3 id="location-name">Arroyo Village</h3>
+                        <p id="location-desc">Your tribal village. The Elder has tasked you with finding the sacred GECK to save your people.</p>
+                    </div>
+                    <div id="location-image" class="location-image wasteland-bg"></div>
+                    <div class="action-buttons">
+                        <button class="action-btn" data-action="explore">🔍 Explore</button>
+                        <button class="action-btn" data-action="rest">⛺ Rest</button>
+                        <button class="action-btn" data-action="travel">🗺️ Travel</button>
+                    </div>
+                </div>
+
+                <div id="combat-view" class="view">
+                    <div class="combat-arena">
+                        <div class="combatant player-combat">
+                            <div class="combatant-name">You</div>
+                            <div class="combatant-sprite">🧍</div>
+                            <div class="combat-hp-bar">
+                                <div id="player-combat-hp" class="bar hp-bar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="combat-log" id="combat-log">
+                            <div class="log-entry">Combat started!</div>
+                        </div>
+                        <div class="combatant enemy-combat">
+                            <div class="combatant-name" id="enemy-name">Radscorpion</div>
+                            <div class="combatant-sprite" id="enemy-sprite">🦂</div>
+                            <div class="combat-hp-bar">
+                                <div id="enemy-combat-hp" class="bar hp-bar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="combat-actions">
+                        <button class="combat-btn" data-action="attack">⚔️ Attack</button>
+                        <button class="combat-btn" data-action="aimed-shot">🎯 Aimed Shot</button>
+                        <button class="combat-btn" data-action="item">💊 Use Item</button>
+                        <button class="combat-btn" data-action="run">🏃 Run</button>
+                    </div>
+                </div>
+
+                <div id="dialogue-view" class="view">
+                    <div class="dialogue-box">
+                        <div class="npc-portrait" id="npc-portrait">🧓</div>
+                        <div class="dialogue-content">
+                            <div class="npc-name" id="dialogue-npc-name">Elder</div>
+                            <div class="dialogue-text" id="dialogue-text"></div>
+                            <div class="dialogue-choices" id="dialogue-choices"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="travel-view" class="view">
+                    <div class="travel-map">
+                        <h3>Wasteland Map</h3>
+                        <div class="locations-list" id="locations-list"></div>
+                        <button class="pip-boy-btn" id="cancel-travel">Back</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <div class="bottom-nav">
+                <button class="nav-btn active" data-tab="stats">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Stats</span>
+                </button>
+                <button class="nav-btn" data-tab="inventory">
+                    <span class="nav-icon">🎒</span>
+                    <span class="nav-label">Inv</span>
+                </button>
+                <button class="nav-btn" data-tab="quests">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">Quests</span>
+                </button>
+                <button class="nav-btn" data-tab="map">
+                    <span class="nav-icon">🗺️</span>
+                    <span class="nav-label">Map</span>
+                </button>
+            </div>
+
+            <!-- Tab Content Panels -->
+            <div class="tab-panels">
+                <div id="stats-panel" class="tab-panel active">
+                    <h3>Character Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-display">
+                            <span class="stat-name">STR</span>
+                            <span class="stat-val" id="display-str">5</span>
+                        </div>
+                        <div class="stat-display">
+                            <span class="stat-name">PER</span>
+                            <span class="stat-val" id="display-per">5</span>
+                        </div>
+                        <div class="stat-display">
+                            <span class="stat-name">END</span>
+                            <span class="stat-val" id="display-end">5</span>
+                        </div>
+                        <div class="stat-display">
+                            <span class="stat-name">CHA</span>
+                            <span class="stat-val" id="display-cha">5</span>
+                        </div>
+                        <div class="stat-display">
+                            <span class="stat-name">INT</span>
+                            <span class="stat-val" id="display-int">5</span>
+                        </div>
+                        <div class="stat-display">
+                            <span class="stat-name">AGI</span>
+                            <span class="stat-val" id="display-agi">5</span>
+                        </div>
+                        <div class="stat-display">
+                            <span class="stat-name">LCK</span>
+                            <span class="stat-val" id="display-lck">5</span>
+                        </div>
+                    </div>
+                    <div class="derived-stats">
+                        <div>Max HP: <span id="derived-hp">100</span></div>
+                        <div>Action Points: <span id="derived-ap">10</span></div>
+                        <div>Armor Class: <span id="derived-ac">10</span></div>
+                        <div>Melee Damage: <span id="derived-dmg">5</span></div>
+                    </div>
+                </div>
+
+                <div id="inventory-panel" class="tab-panel">
+                    <h3>Inventory</h3>
+                    <div class="equipped-section">
+                        <h4>Equipped</h4>
+                        <div class="equipped-item">
+                            <span>Weapon: </span>
+                            <span id="equipped-weapon">Spear</span>
+                        </div>
+                        <div class="equipped-item">
+                            <span>Armor: </span>
+                            <span id="equipped-armor">Tribal Outfit</span>
+                        </div>
+                    </div>
+                    <div class="inventory-grid" id="inventory-grid"></div>
+                    <div class="inventory-weight">
+                        Weight: <span id="current-weight">10</span> / <span id="max-weight">150</span>
+                    </div>
+                </div>
+
+                <div id="quests-panel" class="tab-panel">
+                    <h3>Quests</h3>
+                    <div id="quests-list" class="quests-list"></div>
+                </div>
+
+                <div id="map-panel" class="tab-panel">
+                    <h3>World Map</h3>
+                    <div id="world-map" class="world-map-display">
+                        <div class="map-legend">
+                            <div>📍 = Current Location</div>
+                            <div>🏛️ = City</div>
+                            <div>⚠️ = Danger Zone</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Modal -->
+        <div id="message-modal" class="modal">
+            <div class="modal-content">
+                <p id="modal-text"></p>
+                <button id="modal-close" class="pip-boy-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/game.js"></script>
+</body>
+</html>
